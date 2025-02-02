@@ -7,8 +7,9 @@ addAssignees: author
 # A list of reviewers to be added to pull requests (GitHub user name)
 reviewers:
   - tushariyer
+  - tushariyer-bot
 
-numberOfReviewers: 0
+numberOfReviewers: 2
 
 # A list of assignees, overrides reviewers if set
 # assignees:

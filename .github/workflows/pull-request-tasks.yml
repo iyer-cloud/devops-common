@@ -37,12 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: hmarr/auto-approve-action@v2
-      if: github.actor == 'tushariyer'
+      if: github.actor == 'tushariyer' || 'tushariyer-bot'
       with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        github-token: "${{ secrets.APPROVAL_TOKEN }}"
   enable_auto_merge:
     runs-on: ubuntu-latest
     steps:
       - uses: alexwilson/enable-github-automerge-action@main
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: "${{ secrets.APPROVAL_TOKEN }}"
