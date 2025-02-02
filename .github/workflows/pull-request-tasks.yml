@@ -14,3 +14,16 @@ jobs:
           configuration-path: .github/pull-request-labeler.yml
         env:
           GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
+  assign_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/auto-assign-action@v1.2.1
+        with:
+          configuration-path: '.github/auto-assign-configs.yml'
+  approve_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      if: github.actor == 'tushariyer'
+      with:
+        github-token: "${{ secrets.APPROVAL_TOKEN }}"
