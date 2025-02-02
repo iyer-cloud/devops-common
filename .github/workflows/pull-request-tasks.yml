@@ -27,3 +27,9 @@ jobs:
       if: github.actor == 'tushariyer'
       with:
         github-token: "${{ secrets.APPROVAL_TOKEN }}"
+  enable_auto_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: "${{ secrets.APPROVAL_TOKEN }}"
