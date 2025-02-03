@@ -1,0 +1,48 @@
+name: Pull Request Tasks
+on:
+  pull_request:
+    types: [opened, edited, ready_for_review, review_requested, auto_merge_enabled]
+    branches:
+      - develop
+
+jobs:
+  label_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: TimonVS/pr-labeler-action@v3
+        with:
+          configuration-path: .github/pull-request-labeler.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
+  update_pull_request_description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: octue/generate-pull-request-description@1.0.0.beta-2
+        id: gen-desc
+        with:
+          pull_request_url: ${{ github.event.pull_request.url }}
+          api_token: ${{ secrets.HUB_TOKEN }}
+      - uses: riskledger/update-pr-description@v2
+        with:
+          body: ${{ steps.gen-desc.outputs.pull_request_description }}
+          token: ${{ secrets.HUB_TOKEN }}
+  assign_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/auto-assign-action@v1.2.1
+        with:
+          configuration-path: '.github/auto-assign-configs.yml'
+  approve_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      if: github.actor == 'tushariyer' || 'tushariyer-bot'
+      with:
+        github-token: "${{ secrets.APPROVAL_TOKEN }}"
+  enable_auto_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: "${{ secrets.APPROVAL_TOKEN }}"

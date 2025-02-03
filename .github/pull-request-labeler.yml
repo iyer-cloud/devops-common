@@ -1,0 +1,5 @@
+Feature: 'feature/*'
+Bugfix: 'bugfix/*'
+Chore: 'chore/*'
+CICD: 'cicd/*'
+
